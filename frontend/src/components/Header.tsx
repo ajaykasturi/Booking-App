@@ -12,7 +12,7 @@ const Header = () => {
             to="/register"
             className="flex items-center bg-white rounded-full text-blue-600 px-3 font-bold hover:bg-gray-100"
           >
-            Sign In
+            Sign Up
           </Link>
         </span>
       </div>
