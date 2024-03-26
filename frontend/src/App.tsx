@@ -1,10 +1,8 @@
-import { useState } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./layouts/Layout";
+import Register from "./pages/Register";
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
       <BrowserRouter>
@@ -14,6 +12,14 @@ function App() {
             element={
               <Layout>
                 <p>Home Page</p>
+              </Layout>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <Layout>
+                <Register />
               </Layout>
             }
           />
