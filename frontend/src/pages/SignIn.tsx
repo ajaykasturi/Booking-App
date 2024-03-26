@@ -27,9 +27,7 @@ const SignIn = () => {
           type={"email"}
           title={"email"}
           register={register}
-          options={[
-            { required: { value: true, message: "Email is required" } },
-          ]}
+          options={{ required: { value: true, message: "Email is required" } }}
         />
         {errors.email && <ErrorLabel err={errors.email?.message} />}
       </Label>
@@ -38,15 +36,13 @@ const SignIn = () => {
           type={"password"}
           title={"password"}
           register={register}
-          options={[
-            {
-              required: { value: true, message: "Password is required" },
-              minLength: {
-                value: 6,
-                message: "Password must be 6 chars long",
-              },
+          options={{
+            required: { value: true, message: "Password is required" },
+            minLength: {
+              value: 6,
+              message: "Password must be 6 chars long",
             },
-          ]}
+          }}
         />
         {errors.password && <ErrorLabel err={errors.password?.message} />}
       </Label>

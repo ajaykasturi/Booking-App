@@ -30,15 +30,13 @@ const Register = () => {
             type={"text"}
             title={"firstName"}
             register={register}
-            options={[
-              {
-                required: { value: true, message: "FirstName is required" },
-                minLength: {
-                  value: 3,
-                  message: "FristName must be 3 chars long",
-                },
+            options={{
+              required: { value: true, message: "FirstName is required" },
+              minLength: {
+                value: 3,
+                message: "FristName must be 3 chars long",
               },
-            ]}
+            }}
           />
           {errors.firstName && <ErrorLabel err={errors.firstName?.message} />}
         </Label>
@@ -47,15 +45,13 @@ const Register = () => {
             type={"text"}
             title={"lastName"}
             register={register}
-            options={[
-              {
-                required: { value: true, message: "LastName is required" },
-                minLength: {
-                  value: 3,
-                  message: "FristName must be 3 chars long",
-                },
+            options={{
+              required: { value: true, message: "LastName is required" },
+              minLength: {
+                value: 3,
+                message: "FristName must be 3 chars long",
               },
-            ]}
+            }}
           />
           {errors.lastName && <ErrorLabel err={errors.lastName?.message} />}
         </Label>
@@ -65,9 +61,7 @@ const Register = () => {
           type={"email"}
           title={"email"}
           register={register}
-          options={[
-            { required: { value: true, message: "Email is required" } },
-          ]}
+          options={{ required: { value: true, message: "Email is required" } }}
         />
         {errors.email && <ErrorLabel err={errors.email?.message} />}
       </Label>
@@ -76,15 +70,13 @@ const Register = () => {
           type={"password"}
           title={"password"}
           register={register}
-          options={[
-            {
-              required: { value: true, message: "Password is required" },
-              minLength: {
-                value: 6,
-                message: "Password must be 6 chars long",
-              },
+          options={{
+            required: { value: true, message: "Password is required" },
+            minLength: {
+              value: 6,
+              message: "Password must be 6 chars long",
             },
-          ]}
+          }}
         />
         {errors.password && <ErrorLabel err={errors.password?.message} />}
       </Label>
@@ -93,25 +85,23 @@ const Register = () => {
           type={"password"}
           title={"confirmPassword"}
           register={register}
-          options={[
-            {
-              required: {
-                value: true,
-                message: "Confirm password is required",
-              },
-              minLength: {
-                value: 6,
-                message: "Password must be 6 chars long",
-              },
-              validate: {
-                isMatch: (cpassword: string) => {
-                  if (cpassword !== password) {
-                    return "Your passwords do not match";
-                  }
-                },
+          options={{
+            required: {
+              value: true,
+              message: "Confirm password is required",
+            },
+            minLength: {
+              value: 6,
+              message: "Password must be 6 chars long",
+            },
+            validate: {
+              isMatch: (cpassword: string) => {
+                if (cpassword !== password) {
+                  return "Your passwords do not match";
+                }
               },
             },
-          ]}
+          }}
         />
         {errors.confirmPassword && (
           <ErrorLabel err={errors.confirmPassword?.message} />
