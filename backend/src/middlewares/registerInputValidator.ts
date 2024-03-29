@@ -5,6 +5,7 @@ function registerInputValidator(
   res: Response,
   next: NextFunction
 ) {
+  // console.log(req.body);
   const parsed = registerSchema.safeParse(req.body);
   if (parsed.success) {
     next();

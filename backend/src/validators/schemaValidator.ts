@@ -13,6 +13,7 @@ export const registerSchema = z.object({
       invalid_type_error: "password must be string",
     })
     .min(6, { message: "Password must be 6 or more chars long" }),
+  confirmPassword: z.string().optional(),
   firstName: z
     .string({
       required_error: "FirstName is required",
