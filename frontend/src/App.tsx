@@ -25,7 +25,7 @@ function App() {
             }
           />
           <Route
-            path="/signin"
+            path="/sign-in"
             element={
               <Layout>
                 <SignIn />

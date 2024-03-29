@@ -2,8 +2,8 @@ import { useForm } from "react-hook-form";
 import Label from "../components/Label";
 import Input from "../components/Input";
 import ErrorLabel from "../components/ErrorLabel";
-import { Link } from "react-router-dom";
-import { useMutation } from "react-query";
+import { Link, useNavigate } from "react-router-dom";
+import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from "../api-client";
 import { useAppContext } from "../contextts/AppContext";
 export type RegisterFormData = {
@@ -14,18 +14,21 @@ export type RegisterFormData = {
   confirmPassword: string;
 };
 const Register = () => {
+  const navigate = useNavigate();
   const { showToast } = useAppContext();
+  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm<RegisterFormData>();
-
   const mutation = useMutation(apiClient.register, {
-    onSuccess: () => {
+    onSuccess: async () => {
       // console.log("registration successful!");
       showToast({ message: "Registration Success!", type: "SUCCESS" });
+      await queryClient.invalidateQueries("validateToken");
+      navigate("/");
     },
     onError: (error: Error) => {
       // console.log(error.message);
@@ -123,13 +126,14 @@ const Register = () => {
           <ErrorLabel err={errors.confirmPassword?.message} />
         )}
       </Label>
-      <span className="text-gray-800 mb-0">
-        Already registered?{" "}
-        <Link className="text-blue-500 underline" to="/signin">
-          Sign in here
-        </Link>
-      </span>
-      <span className="flex justify-center">
+
+      <span className="flex items-center justify-between">
+        <span className="text-sm">
+          Already registered?{" "}
+          <Link className="text-blue-500 underline" to="/sign-in">
+            Sign in here
+          </Link>
+        </span>
         <button
           type="submit"
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-xl px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"

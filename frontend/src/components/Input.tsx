@@ -1,12 +1,24 @@
 import { RegisterOptions, UseFormRegister } from "react-hook-form";
 import { RegisterFormData } from "../pages/Register";
-type InputData = {
+import { SignInFormData } from "../pages/SignIn";
+type InputRegisterData = {
   register: UseFormRegister<RegisterFormData>;
   title: keyof RegisterFormData;
+};
+type InputSignInData = {
+  register: UseFormRegister<SignInFormData>;
+  title: keyof SignInFormData;
+};
+type RemainTypes = {
   type?: string;
   options: RegisterOptions;
 };
-const Input = ({ register, title, options, type }: InputData) => {
+const Input = ({
+  register,
+  title,
+  options,
+  type,
+}: (InputRegisterData | InputSignInData) & RemainTypes) => {
   return (
     <>
       <input
