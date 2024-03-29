@@ -4,12 +4,18 @@ import "dotenv/config";
 import mongoose from "mongoose";
 import apiRouter from "./routes/apis";
 mongoose.connect(process.env.MONGODB_URL as string);
+import cookieParser from "cookie-parser";
 const app = express();
 const port = 3002;
-
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+  })
+);
 
 app.use("/api", apiRouter);
 

@@ -4,6 +4,7 @@ import User from "../models/user";
 import * as argon2 from "argon2";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
+import { verifyToken } from "../middlewares/auth";
 const router = express.Router();
 
 router.post(
@@ -38,5 +39,13 @@ router.post(
     }
   }
 );
-
+router.get("/validate-token", verifyToken, (req: Request, res: Response) => {
+  res.status(200).json({ userId: req.userId });
+});
+router.post("/logout", (req: Request, res: Response) => {
+  res.cookie("auth_token", "", {
+    expires: new Date(0),
+  });
+  res.send();
+});
 export default router;
