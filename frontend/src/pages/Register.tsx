@@ -3,6 +3,9 @@ import Label from "../components/Label";
 import Input from "../components/Input";
 import ErrorLabel from "../components/ErrorLabel";
 import { Link } from "react-router-dom";
+import { useMutation } from "react-query";
+import * as apiClient from "../api-client";
+import { useAppContext } from "../contextts/AppContext";
 export type RegisterFormData = {
   firstName: string;
   lastName: string;
@@ -11,15 +14,28 @@ export type RegisterFormData = {
   confirmPassword: string;
 };
 const Register = () => {
+  const { showToast } = useAppContext();
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm<RegisterFormData>();
+
+  const mutation = useMutation(apiClient.register, {
+    onSuccess: () => {
+      // console.log("registration successful!");
+      showToast({ message: "Registration Success!", type: "SUCCESS" });
+    },
+    onError: (error: Error) => {
+      // console.log(error.message);
+      showToast({ message: error.message, type: "ERROR" });
+    },
+  });
+
   const password: string = watch("password");
   const onSubmit = (data: RegisterFormData) => {
-    console.log(data);
+    mutation.mutate(data);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
