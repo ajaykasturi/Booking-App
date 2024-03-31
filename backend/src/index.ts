@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import apiRouter from "./routes/apis";
 mongoose.connect(process.env.MONGODB_URL as string);
 import cookieParser from "cookie-parser";
+import path from "path";
 const app = express();
 const port = 3002;
 app.use(cookieParser());
@@ -17,6 +18,7 @@ app.use(
   })
 );
 
+app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 app.use("/api", apiRouter);
 
 app.get("/", (req: Request, res: Response) => {

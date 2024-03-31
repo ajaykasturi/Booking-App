@@ -14,7 +14,6 @@ const SignOutButton = () => {
     },
     onError: (error: Error) => {
       showToast({ message: error.message, type: "ERROR" });
-      s;
     },
   });
   const handleClick = () => {
