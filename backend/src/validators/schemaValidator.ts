@@ -42,3 +42,33 @@ export const signInSchema = z.object({
     })
     .min(6, { message: "Password must be 6 or more chars long" }),
 });
+
+export const hotelSchema = z.object({
+  name: z.string({
+    required_error: "Name is required",
+    invalid_type_error: "Name must be a string",
+  }),
+  city: z.string({
+    required_error: "City is required",
+    invalid_type_error: "City must be a string",
+  }),
+  country: z.string({
+    required_error: "Country is required",
+    invalid_type_error: "Country must be a string",
+  }),
+  description: z.string({
+    required_error: "Description is required",
+    invalid_type_error: "Description must be a string",
+  }),
+  type: z.string({
+    required_error: "Type is required",
+    invalid_type_error: "Type must be a string",
+  }),
+  pricePerNight: z.number({
+    required_error: "Price per Night is required",
+    invalid_type_error: "Price per Night must be a number",
+  }),
+  facilities: z
+    .array(z.string())
+    .nonempty({ message: "Facilities are required" }),
+});
