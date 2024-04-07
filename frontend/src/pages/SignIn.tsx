@@ -36,7 +36,7 @@ const SignIn = () => {
   });
 
   const onSubmit = (data: SignInFormData) => {
-    // console.log(data);
+    console.log(data);
     mutation.mutate(data);
   };
 

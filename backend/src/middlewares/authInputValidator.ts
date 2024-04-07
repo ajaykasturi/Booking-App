@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { signInSchema } from "../validators/schemaValidator";
 function authInputValidator(req: Request, res: Response, next: NextFunction) {
+  console.log("authinput");
   const parsed = signInSchema.safeParse(req.body);
   if (parsed.success) {
     next();

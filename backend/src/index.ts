@@ -26,7 +26,7 @@ app.use(
 );
 
 app.use(express.static(path.join(__dirname, "../../frontend/dist")));
-
+app.use("/api", apiRouter);
 app.get("/", (req: Request, res: Response) => {
   res.json({ message: "hello" });
 });
