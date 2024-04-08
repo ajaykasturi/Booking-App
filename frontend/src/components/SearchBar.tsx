@@ -10,7 +10,7 @@ const SearchBar = () => {
   const [checkOut, setCheckOut] = useState<Date>(search.checkOut);
   const [adultCount, setAdultCount] = useState<number>(search.adultCount);
   const [childCount, setChildCount] = useState<number>(search.childCount);
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = (event: any) => {
     event.preventDefault();
     search.savedSearchValues(
       destination,
@@ -93,7 +93,7 @@ const SearchBar = () => {
         <button className="w-2/3 bg-blue-600 text-white h-full p-2 font-bold text-xl hover:bg-blue-500 rounded-md">
           Search
         </button>
-        <button className="w-1/3 bg-red-600 text-white h-full p-2 font-bold text-xl hover:bg-blue-500 rounded-md">
+        <button className="w-1/3 bg-red-600 text-white h-full p-2 font-bold text-xl hover:bg-red-500 rounded-md">
           Clear
         </button>
       </div>
