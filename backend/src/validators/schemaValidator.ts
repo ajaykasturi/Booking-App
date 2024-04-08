@@ -68,6 +68,18 @@ export const hotelSchema = z.object({
     required_error: "Price per Night is required",
     invalid_type_error: "Price per Night must be a number",
   }),
+  adultCount: z.number({
+    required_error: "Adult Count  is required",
+    invalid_type_error: "Adult Count must be a number",
+  }),
+  childCount: z.number({
+    required_error: "Child Count  is required",
+    invalid_type_error: "Child Count must be a number",
+  }),
+  starRating: z.number({
+    required_error: "Star Rating Count  is required",
+    invalid_type_error: "Star Rating Count must be a number",
+  }),
   facilities: z
     .array(z.string())
     .nonempty({ message: "Facilities are required" }),

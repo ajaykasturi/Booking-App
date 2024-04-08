@@ -7,4 +7,5 @@ const router = express.Router();
 router.use("/users", userRouter);
 router.use("/auth", authRouter);
 router.use("/my-hotels", myHotelRouter);
+
 export default router;

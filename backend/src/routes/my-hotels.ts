@@ -15,11 +15,15 @@ const upload = multer({
     fileSize: 5 * 1024 * 1024, //5MB
   },
 });
+router.get("/", (req, res) => {
+  console.log(req.body);
+  res.send("hello");
+});
 router.post(
   "/",
   verifyToken,
-  hotelInputValidator,
   upload.array("imageFiles", 6),
+  hotelInputValidator,
   async (req: Request, res: Response) => {
     try {
       const imageFiles = req.files as Express.Multer.File[];

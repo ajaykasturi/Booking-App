@@ -30,7 +30,9 @@ app.use("/api", apiRouter);
 app.get("/", (req: Request, res: Response) => {
   res.json({ message: "hello" });
 });
-
+app.get("*", (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, "../../frontend/dist/index.html"));
+});
 app.listen(port, () => {
   console.log(`server is running on port ${port}`);
 });
