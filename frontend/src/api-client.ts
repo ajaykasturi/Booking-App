@@ -1,3 +1,4 @@
+import { HotelType } from "./config/hotel-options-config";
 import { RegisterFormData } from "./pages/Register";
 import { SignInFormData } from "./pages/SignIn";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
@@ -51,10 +52,10 @@ export const signOut = async () => {
 };
 
 export const addMyHotel = async (hotelFormData: FormData) => {
-  console.log(hotelFormData);
-  for (var pair of hotelFormData.entries()) {
-    console.log(pair[0] + ": " + pair[1]);
-  }
+  // console.log(hotelFormData);
+  // for (var pair of hotelFormData.entries()) {
+  //   console.log(pair[0] + ": " + pair[1]);
+  // }
   const response = await fetch(`${API_BASE_URL}/api/my-hotels`, {
     method: "POST",
     credentials: "include",
@@ -63,5 +64,15 @@ export const addMyHotel = async (hotelFormData: FormData) => {
   if (!response.ok) {
     throw new Error("Failed to add hotel");
   }
-  console.log(await response.json());
+  return await response.json();
+};
+export const fetchMyHotels = async (): Promise<HotelType[]> => {
+  const response = await fetch(`${API_BASE_URL}/api/my-hotels`, {
+    credentials: "include",
+  });
+  if (!response.ok) {
+    throw new Error("Error Fetching hotels");
+  }
+  const boydResponse = await response.json();
+  return boydResponse;
 };

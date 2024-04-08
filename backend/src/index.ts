@@ -30,6 +30,7 @@ app.use("/api", apiRouter);
 app.get("/", (req: Request, res: Response) => {
   res.json({ message: "hello" });
 });
+//fallback route for handling frontend client side routing
 app.get("*", (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, "../../frontend/dist/index.html"));
 });
