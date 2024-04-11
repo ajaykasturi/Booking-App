@@ -8,6 +8,8 @@ import AddHotel from "./pages/AddHotel";
 import MyHotels from "./pages/MyHotels";
 import EditHotel from "./pages/EditHotel";
 import Search from "./pages/Search";
+import Detail from "./pages/Detail";
+import Page404 from "./pages/Page404";
 function App() {
   const { isLoggedIn } = useAppContext();
   return (
@@ -46,6 +48,14 @@ function App() {
               </Layout>
             }
           />
+          <Route
+            path="/detail/:hotelId"
+            element={
+              <Layout>
+                <Detail />
+              </Layout>
+            }
+          />
           {isLoggedIn && (
             <>
               <Route
@@ -74,7 +84,7 @@ function App() {
               />
             </>
           )}
-          <Route path="*" element={"Page Not Found"} />
+          <Route path="*" element={<Page404 />} />
         </Routes>
       </BrowserRouter>
     </>

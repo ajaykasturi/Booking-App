@@ -84,3 +84,7 @@ export const hotelSchema = z.object({
     .array(z.string())
     .nonempty({ message: "Facilities are required" }),
 });
+export const hotelIdSchema = z.string({
+  required_error: "Hotel Id is required",
+  invalid_type_error: "Hotel Id must be a string",
+});

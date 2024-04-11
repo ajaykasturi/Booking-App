@@ -1,8 +1,25 @@
 import express, { Request, Response } from "express";
 import Hotel from "../models/hotel";
 import { HotelSearchResponse } from "../shared/types";
+import hotelIdValidator from "../middlewares/hotelIdValidator";
 
 const router = express.Router();
+
+router.get(
+  "/search/:id",
+  hotelIdValidator,
+  async (req: Request, res: Response) => {
+    const id = req.params.id.toString();
+    try {
+      const hotel = await Hotel.findById(id);
+      return res.json(hotel);
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: "Error fetching hotel", error: error });
+    }
+  }
+);
 
 router.get("/search", async (req: Request, res: Response) => {
   try {
