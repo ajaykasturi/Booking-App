@@ -1,7 +1,7 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+import imgurl from "../../public/image.png";
 function Page404() {
-  const location = useLocation();
-  console.log(location);
+  console.log(imgurl);
   return (
     <>
       <section className="bg-white dark:bg-gray-900 h-screen">
@@ -9,7 +9,7 @@ function Page404() {
           <div className="mx-auto max-w-screen-sm text-center">
             <img
               className="h-auto max-w-lg mx-auto -translate-y-20"
-              src="frontend/public/image.png"
+              src={imgurl}
               alt="image description"
             />
             <p className="mb-4 text-3xl tracking-tight font-bold text-gray-900 md:text-4xl dark:text-white">
