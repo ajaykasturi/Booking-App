@@ -19,6 +19,7 @@ export type BookingType = {
   checkIn: Date;
   checkOut: Date;
   totalCost: number;
+  paymentDetails: { payment_id: string; order_id: string };
 };
 export type UserType = {
   _id: string;

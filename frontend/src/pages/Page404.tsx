@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import imgurl from "../../public/image.png";
+import imgurl from "../image.png";
 function Page404() {
   console.log(imgurl);
   return (

@@ -3,10 +3,10 @@ import ErrorLabel from "../../components/ErrorLabel";
 import { HotelFormDataType } from "./ManageHotelForm";
 
 const DetailsSection = () => {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext<HotelFormDataType>();
+  const { register, formState, getValues } =
+    useFormContext<HotelFormDataType>();
+  const { errors } = formState;
+  console.log(getValues("pricePerNight"));
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-3xl font-bold mb-3">Add Hotel</h1>
@@ -60,7 +60,6 @@ const DetailsSection = () => {
         Price Per Night
         <input
           type="number"
-          min={1}
           className="border rounded w-full py-2 px-2 font-normal"
           {...register("pricePerNight", {
             required: {

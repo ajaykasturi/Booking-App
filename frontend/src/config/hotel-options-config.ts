@@ -51,12 +51,16 @@ export type HotelSearchResponse = {
   };
 };
 
-export type PaymentIntentResponse = {
-  paymentIntentId: string;
-  clientSecret: string;
+export type PaymentOrderResponse = {
+  orderId: string;
   totalCost: number;
+  receipt: string;
 };
-
+export type PaymentConfirmationResponse = {
+  razorpay_payment_id: string;
+  razorpay_order_id: string;
+  razorpay_signature: string;
+};
 export type UserType = {
   _id: string;
   email: string;

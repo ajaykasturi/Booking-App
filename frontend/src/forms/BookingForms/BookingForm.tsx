@@ -1,16 +1,18 @@
 import { useForm } from "react-hook-form";
 import {
-  PaymentIntentResponse,
+  PaymentConfirmationResponse,
+  PaymentOrderResponse,
   UserType,
 } from "../../config/hotel-options-config";
-import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { StripeCardElement, StripeElement } from "@stripe/stripe-js";
 import { useSearchContext } from "../../contextts/SearchContext";
-import { useParams } from "react-router-dom";
-
+import { useNavigate, useParams } from "react-router-dom";
+import { useMutation } from "react-query";
+import * as apiClient from "../../api-client";
+import { useAppContext } from "../../contextts/AppContext";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 type Props = {
   currentUser: UserType;
-  paymentIntent: PaymentIntentResponse;
+  paymentOrder: PaymentOrderResponse;
 };
 export type BookingFormData = {
   firstName: string;
@@ -21,14 +23,29 @@ export type BookingFormData = {
   checkIn: string;
   checkOut: string;
   hotelId: string;
-  paymentIntentId: string;
+  paymentDetails?: { payment_id: string; order_id: string };
   totalCost: number;
 };
-const BookingForm = ({ currentUser, paymentIntent }: Props) => {
-  const stripe = useStripe();
-  const elements = useElements();
+const BookingForm = ({ currentUser, paymentOrder }: Props) => {
+  const navigate = useNavigate();
   const search = useSearchContext();
   const { hotelId } = useParams();
+  const { showToast } = useAppContext();
+  const { mutate: bookRoom, isLoading } = useMutation(
+    apiClient.createRoomBooking,
+    {
+      onSuccess: () => {
+        showToast({ message: "Booking Saved!", type: "SUCCESS" });
+        navigate("/");
+      },
+      onError: () => {
+        showToast({
+          message: "Error saving booking! contact admin if money is deducted",
+          type: "ERROR",
+        });
+      },
+    }
+  );
   const { register, handleSubmit } = useForm<BookingFormData>({
     defaultValues: {
       firstName: currentUser.firstName,
@@ -39,25 +56,72 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
       checkIn: search.checkIn.toISOString(),
       checkOut: search.checkOut.toISOString(),
       hotelId: hotelId,
-      totalCost: paymentIntent.totalCost,
-      paymentIntentId: paymentIntent.paymentIntentId,
+      totalCost: paymentOrder.totalCost,
     },
   });
   const onSubmit = async (formData: BookingFormData) => {
-    if (!stripe || !elements) {
-      return;
-    }
-    const result = await stripe.confirmCardPayment(paymentIntent.clientSecret, {
-      payment_method: {
-        card: elements.getElement(CardElement) as StripeCardElement,
+    var options = {
+      key: "rzp_test_LwvrisbAofwsfz",
+      amount: paymentOrder.totalCost,
+      currency: "INR",
+      name: "X Bookings",
+      description: "X Booking Dot Com",
+      image: "https://www.example.com/image.jpg",
+      order_id: paymentOrder.orderId,
+      handler: async function (response: PaymentConfirmationResponse) {
+        // console.log(response);
+        const body = {
+          ...response,
+        };
+        const res = await fetch(`${API_BASE_URL}/api/hotels/validatePayment`, {
+          method: "POST",
+          body: JSON.stringify(body),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const jsonRes = await res.json();
+        bookRoom({
+          ...formData,
+          totalCost: formData.totalCost / 100,
+          paymentDetails: {
+            payment_id: jsonRes.paymentId,
+            order_id: jsonRes.orderId,
+          },
+        });
+        // console.log(jsonRes);
       },
+      prefill: {
+        name: "Test Examiner",
+        email: "tester@example.com",
+        contact: "9876543210",
+      },
+      notes: {
+        address: "Hotel Booking Office",
+        hotelId: hotelId,
+        userId: paymentOrder.receipt,
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+    var rzp1 = new window.Razorpay(options);
+    rzp1.on("payment.failed", function (response: any) {
+      alert(response.error.code);
+      alert(response.error.description);
+      alert(response.error.source);
+      alert(response.error.step);
+      alert(response.error.reason);
+      alert(response.error.metadata.order_id);
+      alert(response.error.metadata.payment_id);
     });
-    if (result.paymentIntent?.status === "succeeded") {
-      //book the room
-    }
+    rzp1.open();
   };
   return (
-    <form className="grid grid-cols-1 gap-5 rounded-lg border border-slate-300 p-5">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="grid grid-cols-1 gap-5 rounded-lg border border-slate-300 p-5"
+    >
       <span className="text-3xl font-bold">Confrim Your Details</span>
       <div className="grid grid-cols-2 gap-6">
         <label className="text-gray-700 text-sm font-bold flex-1">
@@ -96,16 +160,18 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
       </div>
       <div className="bg-blue-200 p-4 rounded-md">
         <div className="font-semi-bold">
-          Total Cost: $ {paymentIntent.totalCost.toFixed(2)}
+          Total Cost: &#8377; {paymentOrder.totalCost / 100}
         </div>
         <div className="text-xs">Includes taxes and charges</div>
       </div>
-      <div className="space-y-2">
-        <h3 className="text-xl font-semibold">Payment Details</h3>
-        <CardElement
-          id="payment-element"
-          className="border rounded-md p-2 text-sm"
-        />
+      <div className="flex justify-start">
+        <button
+          disabled={isLoading}
+          type="submit"
+          className="bg-blue-600 text-white p-2 font-bold hover:bg-blue-500 text-md disabled:bg-gray-500 border rounded-md"
+        >
+          {isLoading ? "Saving..." : "Confirm Booking"}
+        </button>
       </div>
     </form>
   );

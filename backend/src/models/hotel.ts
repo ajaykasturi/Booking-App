@@ -27,6 +27,10 @@ const bookingSchema = new mongoose.Schema<BookingType>({
   checkOut: { type: Date, required: true },
   userId: { type: String, required: true },
   totalCost: { type: Number, required: true },
+  paymentDetails: {
+    payment_id: { type: String, required: true },
+    order_id: { type: String, required: true },
+  },
 });
 const hotelSchema = new mongoose.Schema<HotelType>({
   userId: { type: String, required: true },

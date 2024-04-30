@@ -70,6 +70,7 @@ router.put(
   async (req: Request, res: Response) => {
     try {
       const updatedHotel: HotelType = req.body;
+      // console.log(updatedHotel);
       //saving the new hotel in the DB
       const hotel = await Hotel.findOneAndUpdate(
         {
