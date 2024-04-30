@@ -121,7 +121,6 @@ router.post("/validatePayment", async (req, res) => {
   });
 });
 
-// router.post(
 //   "/:hotelId/bookings/payment-intent",
 //   verifyToken,
 //   async (req: Request, res: Response) => {
@@ -173,11 +172,11 @@ router.post(
         key_id: process.env.PAY_KEY_ID || "",
         key_secret: process.env.PAY_KEY_SRECRET || "",
       });
-
+      // console.log(payment_details);
       const paymentOrder = await instance.payments.fetch(
         payment_details.payment_id
       );
-
+      // console.log(paymentOrder);
       if (!paymentOrder?.id) {
         return res.status(400).json({ message: "payment Order not found" });
       }
