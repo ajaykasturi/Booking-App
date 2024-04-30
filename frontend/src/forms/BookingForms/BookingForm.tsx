@@ -1,3 +1,4 @@
+declare var Razorpay: any;
 import { useForm } from "react-hook-form";
 import {
   PaymentConfirmationResponse,
@@ -105,7 +106,7 @@ const BookingForm = ({ currentUser, paymentOrder }: Props) => {
         color: "#3399cc",
       },
     };
-    var rzp1 = new window.Razorpay(options);
+    var rzp1 = new Razorpay(options);
     rzp1.on("payment.failed", function (response: any) {
       alert(response.error.code);
       alert(response.error.description);
