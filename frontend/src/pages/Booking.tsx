@@ -33,7 +33,7 @@ const Booking = () => {
       enabled: !!hotelId && numberOfNights > 0,
     }
   );
-  console.log(paymentOrderData);
+  // console.log(paymentOrderData);
   const { data: hotel } = useQuery(
     "fetchHotelByID",
     () => apiClient.fetchHotelById(hotelId || ""),

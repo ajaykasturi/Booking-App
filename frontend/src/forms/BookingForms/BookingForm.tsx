@@ -11,6 +11,7 @@ import { useMutation } from "react-query";
 import * as apiClient from "../../api-client";
 import { useAppContext } from "../../contextts/AppContext";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+const KEY_ID = import.meta.env.VITE_PAY_KEY_ID || "";
 type Props = {
   currentUser: UserType;
   paymentOrder: PaymentOrderResponse;
@@ -28,6 +29,7 @@ export type BookingFormData = {
   totalCost: number;
 };
 const BookingForm = ({ currentUser, paymentOrder }: Props) => {
+  console.log(KEY_ID);
   const navigate = useNavigate();
   const search = useSearchContext();
   const { hotelId } = useParams();
@@ -62,7 +64,7 @@ const BookingForm = ({ currentUser, paymentOrder }: Props) => {
   });
   const onSubmit = async (formData: BookingFormData) => {
     var options = {
-      key: import.meta.env.PAY_KEY_ID,
+      key: "rzp_test_LwvrisbAofwsfz",
       amount: paymentOrder.totalCost,
       currency: "INR",
       name: "X Bookings",
@@ -108,13 +110,7 @@ const BookingForm = ({ currentUser, paymentOrder }: Props) => {
     };
     var rzp1 = new Razorpay(options);
     rzp1.on("payment.failed", function (response: any) {
-      alert(response.error.code);
       alert(response.error.description);
-      alert(response.error.source);
-      alert(response.error.step);
-      alert(response.error.reason);
-      alert(response.error.metadata.order_id);
-      alert(response.error.metadata.payment_id);
     });
     rzp1.open();
   };
