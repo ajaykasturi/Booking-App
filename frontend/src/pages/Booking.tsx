@@ -32,7 +32,7 @@ const Booking = () => {
       enabled: !!hotelId && numberOfNights > 0,
     }
   );
-  // console.log(paymentOrderData);
+  console.log(paymentOrderData);
   const { data: hotel, isLoading: hotelLoading } = useQuery(
     "fetchHotelByID",
     () => apiClient.fetchHotelById(hotelId || ""),
@@ -83,6 +83,11 @@ const Booking = () => {
             paymentOrder={paymentOrderData}
           />
         )
+      )}
+      {numberOfNights === 0 && (
+        <div className="flex items-center justify-center bg-blue-50 text-xl font-normal p-5">
+          Select atleast one night to confirm booking
+        </div>
       )}
     </div>
   );
