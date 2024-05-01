@@ -98,7 +98,6 @@ router.post(
         key_id: process.env.PAY_KEY_ID || "",
         key_secret: process.env.PAY_KEY_SRECRET || "",
       });
-      // const options = req.body;
       const order = await instance.orders.create(options);
       if (!order) {
         return res
@@ -181,11 +180,9 @@ router.post(
         key_id: process.env.PAY_KEY_ID || "",
         key_secret: process.env.PAY_KEY_SRECRET || "",
       });
-      // console.log(payment_details);
       const paymentOrder = await instance.payments.fetch(
         payment_details.payment_id
       );
-      // console.log(paymentOrder);
       if (!paymentOrder?.id) {
         return res.status(400).json({ message: "payment Order not found" });
       }
@@ -200,7 +197,6 @@ router.post(
           message: `payment order not succeeded. Status: ${paymentOrder.status}`,
         });
       }
-      // console.log(req.body);
       const newBooking: BookingType = {
         ...req.body,
         userId: req.userId,
