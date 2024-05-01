@@ -39,7 +39,7 @@ const BookingForm = ({ currentUser, paymentOrder }: Props) => {
     {
       onSuccess: () => {
         showToast({ message: "Booking Saved!", type: "SUCCESS" });
-        navigate("/");
+        navigate("/my-bookings");
       },
       onError: () => {
         showToast({
