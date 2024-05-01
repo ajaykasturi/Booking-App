@@ -29,7 +29,7 @@ export type BookingFormData = {
   totalCost: number;
 };
 const BookingForm = ({ currentUser, paymentOrder }: Props) => {
-  console.log(KEY_ID);
+  // console.log(KEY_ID);
   const navigate = useNavigate();
   const search = useSearchContext();
   const { hotelId } = useParams();
@@ -69,7 +69,8 @@ const BookingForm = ({ currentUser, paymentOrder }: Props) => {
       currency: "INR",
       name: "X Bookings",
       description: "X Booking Dot Com",
-      image: "https://www.example.com/image.jpg",
+      image:
+        "https://razorpay.com/build/browser/static/razorpay-logo.5cdb58df.svg",
       order_id: paymentOrder.orderId,
       handler: async function (response: PaymentConfirmationResponse) {
         // console.log(response);
