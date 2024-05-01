@@ -64,7 +64,7 @@ const BookingForm = ({ currentUser, paymentOrder }: Props) => {
   });
   const onSubmit = async (formData: BookingFormData) => {
     var options = {
-      key: "rzp_test_LwvrisbAofwsfz",
+      key: KEY_ID,
       amount: paymentOrder.totalCost,
       currency: "INR",
       name: "X Bookings",
